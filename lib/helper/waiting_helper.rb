@@ -7,7 +7,7 @@ class WaitingHelper
 
   def self.wait
     Selenium::WebDriver::Wait.new(
-      timeout: 10,
+      timeout: 5,
       interval: 1,
       message: '',
       ignore: Selenium::WebDriver::Error::NoSuchElementError
