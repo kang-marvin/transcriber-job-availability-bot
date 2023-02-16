@@ -1,5 +1,6 @@
 require 'dotenv'
 require 'selenium-webdriver'
+require 'ruby2d'
 
 require_relative './lib/authenticate_user'
 require_relative './lib/is_user_authenticated'
@@ -21,6 +22,7 @@ class TranscriberJobsBot
   def run
     authenticate_user_and_then do
       if CheckAvailableJobs.call(driver)
+        play_music
         puts '-> Jobs available. Run the bell.'
       else
         puts '-> No job invites yet, will try again in a few minutes.'
@@ -47,6 +49,12 @@ class TranscriberJobsBot
         yield
       end
     end
+  end
+
+  def play_music
+    music = Music.new('./audio/alarm-clock.mp3')
+    music.play
+    music.fadeout(5000)
   end
 
   def configure(driver)
