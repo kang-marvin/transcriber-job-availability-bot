@@ -1,13 +1,9 @@
 class WaitingHelper
-  def self.with_default(value)
-    wait.until do
-      yield
-    end
+  def self.with_default(value, &block)
+    wait.until(&block)
   rescue Selenium::WebDriver::Error::TimeoutError
     value
   end
-
-  private
 
   def self.wait
     Selenium::WebDriver::Wait.new(

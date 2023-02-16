@@ -1,4 +1,4 @@
-require_relative './helper/waiting_helper.rb'
+require_relative './helper/waiting_helper'
 
 class Login
   attr_accessor :driver
@@ -11,11 +11,11 @@ class Login
     set_email_field
     set_password_field
     click_login_button
-    return auth_user
+    auth_user
   end
 
   def self.call(driver)
-    return new(driver).call
+    new(driver).call
   end
 
   private
@@ -36,11 +36,8 @@ class Login
   end
 
   def auth_user
-    failed_login = WaitingHelper.with_default(false) do
+    WaitingHelper.with_default(false) do
       driver.find_element(id: 'client-snackbar').displayed?
     end
-
-    failed_login
   end
-
 end

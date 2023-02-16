@@ -1,11 +1,11 @@
 require 'dotenv'
 require 'selenium-webdriver'
 
-require_relative './lib/login.rb'
+require_relative './lib/login'
 
 class TranscriberJobsBot
-
-  TRANSCRIBER_LOGIN_PAGE = "https://transcriber.amberscript.com"
+  TRANSCRIBER_LOGIN_PAGE =
+    'https://transcriber.amberscript.com'.freeze
 
   attr_accessor :driver
 
@@ -16,7 +16,7 @@ class TranscriberJobsBot
 
   def login
     failed_login = Login.call(driver)
-    puts failed_login ? "Failed Login" : "Success login"
+    puts failed_login ? 'Failed Login' : 'Success login'
   ensure
     driver.quit
   end
@@ -26,10 +26,9 @@ class TranscriberJobsBot
   def configure(driver)
     driver.get(TRANSCRIBER_LOGIN_PAGE)
   end
-
 end
 
 Dotenv.load
 
-bot = TranscriberJobsBot.new()
+bot = TranscriberJobsBot.new
 bot.login
