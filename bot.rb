@@ -1,12 +1,35 @@
-require 'bundler/inline'
+require 'dotenv'
+require 'selenium-webdriver'
 
-gemfile do
-  source 'https://rubygems.org'
+require_relative './lib/login.rb'
 
-  # Selenium Webdrivers
-  gem 'selenium-webdriver', '= 4.8.0'
+class TranscriberJobsBot
+
+  TRANSCRIBER_LOGIN_PAGE = "https://transcriber.amberscript.com"
+
+  attr_accessor :driver
+
+  def initialize
+    @driver = Selenium::WebDriver.for :chrome
+    configure(@driver)
+  end
+
+  def login
+    failed_login = Login.call(driver)
+    puts failed_login ? "Failed Login" : "Success login"
+  ensure
+    driver.quit
+  end
+
+  private
+
+  def configure(driver)
+    driver.get(TRANSCRIBER_LOGIN_PAGE)
+  end
+
 end
 
-puts 'Gems installed'
+Dotenv.load
 
-
+bot = TranscriberJobsBot.new()
+bot.login
