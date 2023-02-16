@@ -1,7 +1,8 @@
 require 'dotenv'
 require 'selenium-webdriver'
 
-require_relative './lib/login'
+require_relative './lib/authenticate_user'
+require_relative './lib/is_user_authenticated'
 
 class TranscriberJobsBot
   TRANSCRIBER_LOGIN_PAGE =
@@ -14,9 +15,14 @@ class TranscriberJobsBot
     configure(@driver)
   end
 
-  def login
-    failed_login = Login.call(driver)
-    puts failed_login ? 'Failed Login' : 'Success login'
+  def start
+    if IsUserAuthenticated.call(driver)
+      puts 'Already authenticated'
+    else
+      puts 'Not yet authenticated. Doing it now...'
+      has_login_errors = AuthenticateUser.call(driver)
+      puts has_login_errors === false ? 'Success login' : 'Failed Login'
+    end
   ensure
     driver.quit
   end
@@ -31,4 +37,4 @@ end
 Dotenv.load
 
 bot = TranscriberJobsBot.new
-bot.login
+bot.start

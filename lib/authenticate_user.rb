@@ -1,6 +1,6 @@
 require_relative './helper/waiting_helper'
 
-class Login
+class AuthenticateUser
   attr_accessor :driver
 
   def initialize(driver)
@@ -11,7 +11,7 @@ class Login
     set_email_field
     set_password_field
     click_login_button
-    auth_user
+    check_if_login_error_appears
   end
 
   def self.call(driver)
@@ -35,7 +35,7 @@ class Login
     login_button.click
   end
 
-  def auth_user
+  def check_if_login_error_appears
     WaitingHelper.with_default(false) do
       driver.find_element(id: 'client-snackbar').displayed?
     end
