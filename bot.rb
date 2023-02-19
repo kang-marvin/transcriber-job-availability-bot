@@ -62,5 +62,4 @@ class TranscriberJobsBot
   end
 end
 
-bot = TranscriberJobsBot.new
-bot.run
+TranscriberJobsBot.new().run

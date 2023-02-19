@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    chronic (0.10.2)
     dotenv (2.8.1)
     json (2.6.3)
     parallel (1.22.1)
@@ -31,6 +32,8 @@ GEM
       websocket (~> 1.0)
     unicode-display_width (2.4.2)
     websocket (1.2.9)
+    whenever (1.0.0)
+      chronic (>= 0.6.3)
 
 PLATFORMS
   x86_64-darwin-21
@@ -40,6 +43,7 @@ DEPENDENCIES
   rubocop (~> 1.21)
   ruby2d
   selenium-webdriver (= 4.8.0)
+  whenever
 
 BUNDLED WITH
    2.4.5

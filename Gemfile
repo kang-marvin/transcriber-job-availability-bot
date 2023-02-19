@@ -11,3 +11,6 @@ gem 'rubocop', '~> 1.21'
 
 # Sound
 gem 'ruby2d'
+
+# Cron job
+gem 'whenever', require: false
