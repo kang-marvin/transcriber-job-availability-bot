@@ -15,8 +15,8 @@ class TranscriberJobsBot
   attr_accessor :driver
 
   def initialize
-    @driver = Selenium::WebDriver.for :chrome
-    configure(@driver)
+    @driver = Selenium::WebDriver.for :chrome, options: configure_options
+    @driver.get(TRANSCRIBER_LOGIN_PAGE)
   end
 
   def run
@@ -57,8 +57,8 @@ class TranscriberJobsBot
     music.fadeout(5000)
   end
 
-  def configure(driver)
-    driver.get(TRANSCRIBER_LOGIN_PAGE)
+  def configure_options
+    Selenium::WebDriver::Options.chrome(args: ['--headless'])
   end
 end
 
