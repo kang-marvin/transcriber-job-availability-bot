@@ -1,8 +1,8 @@
 require_relative './helper/waiting_helper'
 
 class CheckAvailableJobs
-  HEADER  = 'Invitations'.freeze
-  TITLE   = 'No open invites.'.freeze
+  HEADER = 'Invitations'.freeze
+  NO_RESULTS_MESSAGES = ['No open invites.', 'Check back later.'].freeze
 
   attr_accessor :driver
 
@@ -30,7 +30,8 @@ class CheckAvailableJobs
     # We do this to separate btw Invitations & Active Jobs
     searchable_elements_text =
       elements_text[elements_text.index(HEADER)..].uniq
-    !searchable_elements_text.include? TITLE
+
+    (NO_RESULTS_MESSAGES & searchable_elements_text).empty?
   rescue StandardError
     false
   end
