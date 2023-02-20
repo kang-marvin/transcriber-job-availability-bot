@@ -1,6 +1,7 @@
 require 'dotenv'
 require 'selenium-webdriver'
 require 'ruby2d'
+require 'logger'
 
 require_relative './lib/authenticate_user'
 require_relative './lib/is_user_authenticated'
@@ -12,9 +13,10 @@ class TranscriberJobsBot
   TRANSCRIBER_LOGIN_PAGE =
     'https://transcriber.amberscript.com'.freeze
 
-  attr_accessor :driver
+  attr_accessor :driver, :logger
 
   def initialize
+    @logger = Logger.new('./log/cron.log', 'daily')
     @driver = Selenium::WebDriver.for :chrome, options: configure_options
     @driver.get(TRANSCRIBER_LOGIN_PAGE)
   end
@@ -23,12 +25,13 @@ class TranscriberJobsBot
     authenticate_user_and_then do
       if CheckAvailableJobs.call(driver)
         play_music
-        puts '-> Jobs available. Run the bell.'
+        logger.info "Job invites available"
       else
-        puts '-> No job invites yet, will try again in a few minutes.'
+        logger.info "No job invites right now"
       end
     end
   ensure
+    logger.close
     driver.quit
   end
 
@@ -36,19 +39,22 @@ class TranscriberJobsBot
 
   def authenticate_user_and_then
     if IsUserAuthenticated.call(driver)
-      puts '-> Already authenticated.'
       yield
     else
-      puts '-> Authenticating user...'
       has_login_errors = AuthenticateUser.call(driver)
 
       if has_login_errors
-        puts '-> Login failed. Check login credentials in file `.env`'
+        logger.debug "Login failed. Check login credentials in file `.env`"
       else
-        puts '-> Login successful.'
         yield
       end
     end
+  end
+
+  def log_time
+    logger.info "#{Time.now.strftime("%a %d %b - %H:%M")} \n"
+    yield
+    logger.info "\n"
   end
 
   def play_music

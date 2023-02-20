@@ -4,6 +4,6 @@ set :environment, "development"
 
 set :output, "./log/cron.log"
 
-every 1.minute do
+every 5.minutes do
   command "cd #{path} && ./run.sh"
 end

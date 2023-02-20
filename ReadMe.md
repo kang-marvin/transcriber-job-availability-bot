@@ -11,6 +11,18 @@
   chmod +x start.sh
 ```
 
+### **Bot schedule waiting time**
+Currently the bot runs after every 5 minutes. Check the file called `schedule.rb` inside the cofig folder. You can change the value *5* to any number between 1 and 59. if you want an hours or days. Use this syntax
+
+```ruby
+  1.minute
+  5.minutes
+  3.hours
+  4.days
+  2.months
+
+```
+
 ### **How to start the script**
 ```sh
   ./start.sh
