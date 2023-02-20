@@ -22,12 +22,14 @@ class TranscriberJobsBot
   end
 
   def run
-    authenticate_user_and_then do
-      if CheckAvailableJobs.call(driver)
-        play_music
-        logger.info "Job invites available"
-      else
-        logger.info "No job invites right now"
+    log_time do
+      authenticate_user_and_then do
+        if CheckAvailableJobs.call(driver)
+          play_music
+          logger.info "Job invites available"
+        else
+          logger.info "No job invites right now"
+        end
       end
     end
   ensure
@@ -52,7 +54,7 @@ class TranscriberJobsBot
   end
 
   def log_time
-    logger.info "#{Time.now.strftime("%a %d %b - %H:%M")} \n"
+    logger.info "#{Time.now.strftime("%a %d %b - %H:%M")}"
     yield
     logger.info "\n"
   end
