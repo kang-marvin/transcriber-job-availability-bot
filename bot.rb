@@ -26,9 +26,9 @@ class TranscriberJobsBot
       authenticate_user_and_then do
         if CheckAvailableJobs.call(driver)
           play_music
-          logger.info "Job invites available"
+          logger.info 'Job invites available'
         else
-          logger.info "No job invites right now"
+          logger.info 'No job invites right now'
         end
       end
     end
@@ -46,7 +46,7 @@ class TranscriberJobsBot
       has_login_errors = AuthenticateUser.call(driver)
 
       if has_login_errors
-        logger.debug "Login failed. Check login credentials in file `.env`"
+        logger.debug 'Login failed. Check login credentials in file `.env`'
       else
         yield
       end
@@ -54,7 +54,7 @@ class TranscriberJobsBot
   end
 
   def log_time
-    logger.info "#{Time.now.strftime("%a %d %b - %H:%M")}"
+    logger.info Time.now.strftime('%a %d %b - %H:%M')
     yield
     logger.info "\n"
   end
@@ -70,4 +70,4 @@ class TranscriberJobsBot
   end
 end
 
-TranscriberJobsBot.new().run
+TranscriberJobsBot.new.run

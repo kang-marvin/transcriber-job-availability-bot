@@ -30,7 +30,7 @@ class CheckAvailableJobs
     # We do this to separate btw Invitations & Active Jobs
     searchable_elements_text =
       elements_text[elements_text.index(HEADER)..].uniq
-    !elements_text.uniq.include? TITLE
+    !searchable_elements_text.include? TITLE
   rescue StandardError
     false
   end
