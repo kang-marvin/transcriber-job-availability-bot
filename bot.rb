@@ -41,6 +41,7 @@ class TranscriberJobsBot
 
   def authenticate_user_and_then
     if IsUserAuthenticated.call(driver)
+      logger.info 'User is already authenticated / logged in'
       yield
     else
       has_login_errors = AuthenticateUser.call(driver)
@@ -48,6 +49,7 @@ class TranscriberJobsBot
       if has_login_errors
         logger.debug 'Login failed. Check login credentials in file `.env`'
       else
+        logger.info 'User authentication successful'
         yield
       end
     end
@@ -60,6 +62,7 @@ class TranscriberJobsBot
   end
 
   def play_music
+    logger.info 'Alarm ringing'
     music = Music.new('./audio/alarm-clock.mp3')
     music.play
     music.fadeout(5000)
